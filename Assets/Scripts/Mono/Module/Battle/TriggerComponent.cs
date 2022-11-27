@@ -7,15 +7,16 @@ namespace TaoTie
     public class TriggerComponent: MonoBehaviour
     {
         public EntityType CastEntityType;
-        public UnityAction<long,TriggerType> OnTriggerEnterEvt;
+        public UnityAction<long,TriggerType,Vector3> OnTriggerEnterEvt;
         public UnityAction<long> OnTriggerStayEvt;
-        public UnityAction<long,TriggerType> OnTriggerExitEvt;
+        public UnityAction<long,TriggerType,Vector3> OnTriggerExitEvt;
         private void OnTriggerEnter(Collider other)
         {
             var entity = other.GetComponentInParent<EntityComponent>();
             if (entity.EntityType == CastEntityType||CastEntityType == EntityType.ALL)
             {
-                OnTriggerEnterEvt?.Invoke(entity.Id,TriggerType.Enter);
+                var hitPos = other.bounds.ClosestPoint(transform.position);
+                OnTriggerEnterEvt?.Invoke(entity.Id,TriggerType.Enter,hitPos);
             }
            
         }
@@ -32,7 +33,8 @@ namespace TaoTie
             var entity = other.GetComponentInParent<EntityComponent>();
             if (entity.EntityType == CastEntityType||CastEntityType == EntityType.ALL)
             {
-                OnTriggerExitEvt?.Invoke(entity.Id,TriggerType.Exit);
+                var hitPos = other.bounds.ClosestPoint(transform.position);
+                OnTriggerExitEvt?.Invoke(entity.Id,TriggerType.Exit,hitPos);
             }
         }
     }

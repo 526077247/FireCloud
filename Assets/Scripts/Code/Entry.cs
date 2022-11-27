@@ -45,6 +45,7 @@ namespace TaoTie
 
         static void StartGame()
         {
+            ManagerProvider.RegisterManager<HudSystem>();
             ManagerProvider.RegisterManager<GameTimerManager>();
             ManagerProvider.RegisterManager<NumericSystem>();
             ManagerProvider.RegisterManager<XLuaManager>();

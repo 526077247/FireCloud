@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace TaoTie
 {
@@ -11,7 +12,7 @@ namespace TaoTie
         /// <param name="to"></param>
         /// <param name="value"></param>
         /// <param name="broadcast"></param>
-        public static void Damage(Unit from, Unit to, float value,bool broadcast = true)
+        public static void Damage(Unit from, Unit to, float value,Vector3 hitPos,bool broadcast = true)
         {
             // 由于AOI机制from可能为空，但不应该影响to的逻辑处理
             NumericComponent t = to.GetComponent<NumericComponent>();
@@ -31,11 +32,13 @@ namespace TaoTie
                 t.Set(NumericType.HpBase, nowBaseValue);
                 info.NowHp = nowBaseValue;
                 info.RealValue = realValue;
+                info.HitPos = hitPos;
                 if (broadcast)
                 {
                     if(from!=null)
-                        Messager.Instance.Broadcast(from.Id,MessageId.AfterCombatUnitDamage,from, to, info);
+                        Messager.Instance.Broadcast(from.Id,MessageId.AfterCombatUnitGetDamage,from, to, info);
                     Messager.Instance.Broadcast(to.Id,MessageId.AfterCombatUnitGetDamage,from, to, info);
+                    Messager.Instance.Broadcast(0,MessageId.AfterCombatUnitGetDamage,from, to, info);
                 }
             }
             buffT.AfterDamage(from, to, info);
@@ -54,16 +57,16 @@ namespace TaoTie
         /// <param name="cost"></param>
         /// <param name="config"></param>
         /// <param name="skill"></param>
-        public static void OnCollider(TriggerType type, Unit from, Unit to, SkillStepPara stepPara, List<int> costId,
+        public static void OnCollider(Vector3 hitPos,TriggerType type, Unit from, Unit to, SkillStepPara stepPara, List<int> costId,
             List<int> cost,SkillConfig config,Skill skill = null)
         {
             if (type == TriggerType.Enter)
             {
-                OnColliderIn(from, to, stepPara, costId, cost,config,skill);
+                OnColliderIn(hitPos,from, to, stepPara, costId, cost,config,skill);
             }
             else if (type == TriggerType.Exit)
             {
-                OnColliderOut(from, to, stepPara, costId, cost,config,skill);
+                OnColliderOut(hitPos,from, to, stepPara, costId, cost,config,skill);
             }
         }  
         /// <summary>
@@ -76,7 +79,7 @@ namespace TaoTie
         /// <param name="cost"></param>
         /// <param name="config"></param>
         /// <param name="skill">技能判断体</param>
-        public static void OnColliderIn(Unit from, Unit to, SkillStepPara stepPara, List<int> costId,
+        public static void OnColliderIn(Vector3 hitPos,Unit from, Unit to, SkillStepPara stepPara, List<int> costId,
             List<int> cost,SkillConfig config,Skill skill = null)
         {
             if(from==null||to==null) return;//伤害计算参与者无了
@@ -144,7 +147,7 @@ namespace TaoTie
                 NumericComponent f = combatFromU.GetComponent<NumericComponent>();
                 NumericComponent t = combatToU.GetComponent<NumericComponent>();
                 float value = fx.GetData(f, t);
-                BattleHelper.Damage(combatFromU,combatToU,value);
+                BattleHelper.Damage(combatFromU,combatToU,value,hitPos);
             }
         }
         /// <summary>
@@ -157,7 +160,7 @@ namespace TaoTie
         /// <param name="cost"></param>
         /// <param name="config"></param>
         /// <param name="skill">技能判断体</param>
-        public static void OnColliderOut(Unit from, Unit to, SkillStepPara stepPara, List<int> costId,
+        public static void OnColliderOut(Vector3 hitPos,Unit from, Unit to, SkillStepPara stepPara, List<int> costId,
             List<int> cost,SkillConfig config,Skill skill = null)
         {
             // Log.Info("触发"+type.ToString()+to.Id+"  "+from.Id);

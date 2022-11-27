@@ -103,10 +103,10 @@ namespace TaoTie
                     else if (collider.ColliderType == ColliderType.Immediate) //立刻结算
                     {
                         if (collider.StartPosType == StartPosType.Self)
-                            BattleHelper.OnColliderIn(para.From, para.From, stepPara, para.CostId, para.Cost,
+                            BattleHelper.OnColliderIn(para.To.Position,para.From, para.From, stepPara, para.CostId, para.Cost,
                                 para.Ability.Config);
                         else if(collider.StartPosType == StartPosType.Aim&&para.To!=null)
-                            BattleHelper.OnColliderIn(para.From, para.To, stepPara, para.CostId, para.Cost,
+                            BattleHelper.OnColliderIn(para.To.Position,para.From, para.To, stepPara, para.CostId, para.Cost,
                                 para.Ability.Config);
                         else if (collider.StartPosType == StartPosType.MousePos)
                         {

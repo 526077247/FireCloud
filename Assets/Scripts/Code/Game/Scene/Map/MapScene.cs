@@ -77,8 +77,8 @@ namespace TaoTie
                 Self.GetComponent<SkillHolderComponent>().AddSkill(1001 + i);
             }
             
-            
-            UIManager.Instance.OpenWindow<UIBattleView,MapScene>(UIBattleView.PrefabPath,this).Coroutine();
+            await UIManager.Instance.OpenWindow<UIHudView>(UIHudView.PrefabPath,UILayerNames.GameBackgroudLayer);
+            await UIManager.Instance.OpenWindow<UIBattleView,MapScene>(UIBattleView.PrefabPath,this);
         }
     }
 }

@@ -217,10 +217,10 @@ namespace TaoTie
             }
         }
 
-        public void OnTrigger(long id,TriggerType type)
+        public void OnTrigger(long id,TriggerType type,Vector3 hitPos)
         {
             var other = this.FromUnit.Parent.Get<Unit>(id);
-            BattleHelper.OnCollider(type,this.FromUnit,other,GetPara(),CostId,Cost,SkillConfig);
+            BattleHelper.OnCollider(hitPos,type,this.FromUnit,other,GetPara(),CostId,Cost,SkillConfig);
         }
     }
 }

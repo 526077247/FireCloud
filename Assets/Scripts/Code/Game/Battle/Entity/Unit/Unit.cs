@@ -50,7 +50,19 @@ namespace TaoTie
         {
             AddComponent<GameObjectHolderComponent>();
             AddComponent<BuffHolderComponent>();
-            AddComponent<NumericComponent>();
+            var numericComponent = AddComponent<NumericComponent>();
+
+            #region 临时数据
+
+            numericComponent.Set(NumericType.SpeedBase, 6f); // 速度是6米每秒
+            numericComponent.Set(NumericType.AOIBase, 2); // 视野2格
+            numericComponent.Set(NumericType.HpBase, 1000); // 生命1000
+            numericComponent.Set(NumericType.MaxHpBase, 1000); // 最大生命1000
+            numericComponent.Set(NumericType.LvBase,1); //1级
+            numericComponent.Set(NumericType.ATKBase,100); //100攻击
+            numericComponent.Set(NumericType.DEFBase,500); //500防御
+
+            #endregion
             AddComponent<SkillHolderComponent>();
             AddComponent<SpellComponent>();
             AddComponent<MoveComponent>();

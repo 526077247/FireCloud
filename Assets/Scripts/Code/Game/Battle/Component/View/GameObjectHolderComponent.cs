@@ -81,13 +81,15 @@ namespace TaoTie
             EntityView = obj.transform;
             Collector = obj.GetComponent<ReferenceCollector>();
             EntityView.SetParent(this.Parent.Parent.GameObjectRoot);
-            var ec = obj.AddComponent<EntityComponent>();
+            var ec = obj.GetComponent<EntityComponent>();
+            if (ec == null) ec = obj.AddComponent<EntityComponent>();
             ec.Id = this.Id;
             var unit = this.GetParent<Unit>();
             ec.EntityType = unit.Type;
             GameObject tRoot = new GameObject("TriggerRoot");
             TriggerRoot = tRoot.transform;
             TriggerRoot.SetParent(EntityView);
+            TriggerRoot.localPosition = Vector3.zero;
             EntityView.position = unit.Position;
             EntityView.rotation = unit.Rotation;
             Messager.Instance.AddListener<Unit,Vector3>(Id,MessageId.ChangePositionEvt,OnChanePosition);
@@ -104,14 +106,16 @@ namespace TaoTie
             }
             Triggers.Clear();
             Triggers = null;
-            GameObject.Destroy(TriggerRoot.gameObject);
+            if(TriggerRoot!=null)
+                GameObject.Destroy(TriggerRoot.gameObject);
             foreach ((int k,EffectInfo value) in Effects)
             {
                 value.Dispose();
             }
             Effects.Clear();
             Effects = null;
-            GameObjectPoolManager.Instance.RecycleGameObject(EntityView.gameObject);
+            if(EntityView!=null)
+                GameObjectPoolManager.Instance.RecycleGameObject(EntityView.gameObject);
         }
 
         #endregion
@@ -175,7 +179,7 @@ namespace TaoTie
             }
         }
         
-        public async ETTask AddOBBTrigger(long id,Vector3 size,TriggerType type,EntityType entityType,UnityAction<long,TriggerType> onCollider)
+        public async ETTask AddOBBTrigger(long id,Vector3 size,TriggerType type,EntityType entityType,UnityAction<long,TriggerType,Vector3> onCollider)
         {
             while (TriggerRoot==null)
             {
@@ -195,12 +199,13 @@ namespace TaoTie
             }
             var collider = obj.AddComponent<BoxCollider>();
             collider.size = size;
+            collider.isTrigger = true;
             obj.transform.SetParent(TriggerRoot);
             obj.transform.localPosition = Vector3.zero;
             Triggers.Add(id,collider);
         }
         
-        public async ETTask AddSphereTrigger(long id,float radius,TriggerType type,EntityType entityType,UnityAction<long,TriggerType> onCollider)
+        public async ETTask AddSphereTrigger(long id,float radius,TriggerType type,EntityType entityType,UnityAction<long,TriggerType,Vector3> onCollider)
         {
             while (TriggerRoot==null)
             {

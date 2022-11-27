@@ -63,7 +63,7 @@
                     NumericComponent f = from.GetComponent<NumericComponent>();
                     NumericComponent t = target.GetComponent<NumericComponent>();
                     float value = fx.GetData(f, t);
-                    BattleHelper.Damage(from,target,value);
+                    BattleHelper.Damage(from,target,value,target.Position);
                 }
             }
         }

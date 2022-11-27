@@ -103,7 +103,12 @@ namespace TaoTie
         #endregion
         public static FormulaStringFx Get(string formatString)
         {
-            return ManagerProvider.RegisterManager<FormulaStringFx, string>(formatString, formatString);
+            var res = ManagerProvider.GetManager<FormulaStringFx>(formatString);
+            if (res == null)
+            {
+                res = ManagerProvider.RegisterManager<FormulaStringFx, string>(formatString, formatString);
+            }
+            return res;
         }
         private class FormulaNode
         {
