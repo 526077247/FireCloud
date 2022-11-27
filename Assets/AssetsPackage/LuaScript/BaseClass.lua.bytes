@@ -1,0 +1,124 @@
+--[[
+-- Lua面向对象设计
+--]]
+
+--保存类类型的虚表
+local _class = {}
+
+-- 自定义类型
+ClassType = {
+	class = 1,
+	instance = 2,
+}
+
+
+local function _IncludeMixin(aClass, extendClass)
+	assert(type(extendClass) == 'table', "extendClass must be a table")
+	assert(extendClass.GetClassVtbl == nil, "extendClass cannot be baseclass, must be pure table")
+
+	for name, method in pairs(extendClass) do
+		assert(aClass[name] == nil, "function name cannot be same name!!!!")
+		aClass[name] = method
+	end
+
+	return aClass
+end
+
+function BaseClass(classname, super)
+	assert(type(classname) == "string" and #classname > 0)
+	-- 生成一个类类型
+	local class_type = {}
+
+	-- 在创建对象的时候自动调用
+	class_type.ctor = false
+	class_type.dtor = false
+	class_type.__cname = classname
+	class_type.__ctype = ClassType.class
+
+	class_type.super = super
+	class_type.New = function(...)
+		-- 生成一个类对象
+		local obj = {}
+		obj._class_type = class_type
+		obj.__ctype = ClassType.instance
+
+		local M =  {
+			__index = class_type,
+		}
+		-- print("m.index " .. tostring(M.__index))
+		-- 在初始化之前注册基类方法
+		setmetatable(obj,M)
+		-- 调用初始化方法ctor
+		do
+			local create
+			create = function(c, ...)
+				if c.super then
+					create(c.super, ...)
+				end
+				if c.ctor then
+					c.ctor(obj, ...)
+				end
+			end
+
+			create(class_type, ...)
+		end
+
+		-- 注册一个delete方法
+		obj.Delete = function(self)
+			local now_super = self._class_type
+			while now_super ~= nil do
+				if now_super.dtor then
+					now_super.dtor(self)
+				end
+				now_super = now_super.super
+			end
+		end
+		
+		return obj
+	end
+
+	--[[
+		@brief 该方法实质是拷贝了一份，只支持{}，不支持BaseClass 可以将{}认为是interface来理解
+	--]]
+	class_type.Include = function(self, ...)
+		assert(type(self) == 'table', "Make sure you that you are using 'Class:include' instead of 'Class.include'")
+		for _, extendClass in ipairs({...}) do
+			_IncludeMixin(self, extendClass)
+		end
+		return self
+	end
+
+
+	-- local vtbl = {}
+	-- --这里添加个方法来获取class的真实成员表
+	-- class_type.GetClassVtbl = function()
+	-- 	return vtbl
+	-- end
+
+	-- assert(_class[class_type] == nil, "Aready defined class : ", classname)
+	-- _class[class_type] = vtbl
+
+	-- --以后class的成员变量其实都是放到了vtbl中，只是通过虚表来访问而已
+	-- setmetatable(class_type, {
+	-- 	__newindex = function(t,k,v)
+	-- 		vtbl[k] = v
+	-- 	end
+	-- ,
+	-- 	--For call parent method
+	-- 	__index = vtbl,
+	-- })
+
+
+	if super then
+		setmetatable(class_type, {
+			__index = function(t,k)
+				local ret = super[k]
+				--do not do accept, make hot update work right!
+				--vtbl[k] = ret
+				return ret
+			end
+		})
+	end
+
+	return class_type
+end

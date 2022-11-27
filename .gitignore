@@ -36,3 +36,9 @@ Build-Mac
 /Tools/FileServer/obj
 /Tools/FileServer/.idea
 /FileServer
+/Bin
+/Tools/ExcelExport/ExcelExport/obj
+/Tools/ExcelExport/ExcelExport/bin
+/Tools/ExcelExport/.vs
+/Excel/Json
+/Tools/ExcelExport/.idea

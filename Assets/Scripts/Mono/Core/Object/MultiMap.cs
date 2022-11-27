@@ -106,5 +106,15 @@ namespace TaoTie
             }
             return list.Contains(k);
         }
+
+        public new void Clear()
+        {
+            foreach ((_,List<K> list) in this)
+            {
+                list.Clear();
+                ObjectPool.Instance.Recycle(list);
+            }
+            base.Clear();
+        }
     }
 }

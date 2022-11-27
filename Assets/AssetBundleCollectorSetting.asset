@@ -68,6 +68,12 @@ MonoBehaviour:
       PackRuleName: PackDirectory
       FilterRuleName: CollectAll
       AssetTags: 
+    - CollectPath: Assets/AssetsPackage/LuaScript
+      CollectorType: 0
+      AddressRuleName: AddressByPath
+      PackRuleName: PackDirectory
+      FilterRuleName: CollectAll
+      AssetTags: 
   - GroupName: GameAssets
     GroupDesc: "\u6E38\u620F\u8D44\u6E90"
     AssetTags: gameassets
@@ -78,4 +84,28 @@ MonoBehaviour:
       AddressRuleName: AddressByPath
       PackRuleName: PackDirectory
       FilterRuleName: CollectScene
+      AssetTags: 
+    - CollectPath: Assets/AssetsPackage/Scenes/MapScene
+      CollectorType: 0
+      AddressRuleName: AddressByPath
+      PackRuleName: PackDirectory
+      FilterRuleName: CollectScene
+      AssetTags: 
+    - CollectPath: Assets/AssetsPackage/Skill
+      CollectorType: 0
+      AddressRuleName: AddressByPath
+      PackRuleName: PackTopDirectory
+      FilterRuleName: CollectAll
+      AssetTags: 
+    - CollectPath: Assets/AssetsPackage/Unit
+      CollectorType: 0
+      AddressRuleName: AddressByPath
+      PackRuleName: PackTopDirectory
+      FilterRuleName: CollectAll
+      AssetTags: 
+    - CollectPath: Assets/AssetsPackage/Buff
+      CollectorType: 0
+      AddressRuleName: AddressByPath
+      PackRuleName: PackTopDirectory
+      FilterRuleName: CollectAll
       AssetTags: 

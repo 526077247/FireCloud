@@ -1,0 +1,26 @@
+-- 全局模块
+require "Global"
+
+-- 定义为全局模块，整个lua程序的入口类
+GameMain = {};
+
+--主入口函数。从这里开始lua逻辑
+function GameMain:Start()
+	print("GameMain start...")
+end
+
+function GameMain.TryGetSkillConfig(skillId,group,timeline,stepType,params)
+	local skill = require("Skill/Skill"..skillId)
+	if skill == nil then
+		return false
+	end
+	local func = skill[group]
+	if func == nil then
+		return false
+	end
+	skill:SetValue(timeline,stepType,params)
+	func(skill)
+	return true
+end
+
+return GameMain

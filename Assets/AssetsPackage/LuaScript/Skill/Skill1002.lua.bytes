@@ -1,0 +1,8 @@
+local M = BaseClass("Skill1002",BaseSkill)
+
+function M:Start()
+    self:Wait(200)
+    self:GenerateCollider(0,1001,1,1)
+end
+
+return M

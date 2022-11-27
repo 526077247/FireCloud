@@ -25,6 +25,9 @@ namespace TaoTie
         public void Destroy()
         {
             Temp.Clear();
+            HotfixTemp.Clear();
+            allTypes.Clear();
+            mapTypes.Clear();
         }
 
         #endregion

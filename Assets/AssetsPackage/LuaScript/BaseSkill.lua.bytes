@@ -1,0 +1,144 @@
+local M = BaseClass("BaseSkill")
+
+function M:SetValue(timeline,stepType,paras)
+    self.timelime = timeline
+    self.stepType = stepType
+    self.paras = paras
+end
+
+function M:GetValue()
+    return self.timelime,self.stepType,self.paras
+end
+
+--- 仅等待
+---@param time number
+function M:Wait(time)
+    self.timelime:Add(time)
+    self.stepType:Add(0)
+    self.paras:Add(nil)
+end
+
+--- 改变坐标
+---@param time number
+---@param pos any 相对坐标字符串"x,y,z"
+function M:Move(time,pos)
+    self.timelime:Add(time)
+    self.stepType:Add(1)
+    self.paras:Add({pos})
+end
+
+--- 播动画
+---@param time number
+---@param name string 动画名
+function M:Anim(time,name)
+    self.timelime:Add(time)
+    self.stepType:Add(2)
+    self.paras:Add({name})
+end
+
+--- 播放声音
+---@param time number
+---@param path string 音频路径
+function M:Sound(time,path)
+    self.timelime:Add(time)
+    self.stepType:Add(3)
+    self.paras:Add({path})
+end
+
+--- 结算消耗
+---@param time number
+---@param key string 消耗的属性Key字符串
+---@param value number 固定消耗值
+---@param formulaId number 消耗的计算公式id
+function M:Cost(time,key,value,formulaId)
+    self.timelime:Add(time)
+    self.stepType:Add(4)
+    self.paras:Add({key,value,formulaId})
+end
+
+--- 生成召唤物
+---@param time number
+---@param id number 召唤物Id
+function M:GenerateObject(time,id)
+    self.timelime:Add(time)
+    self.stepType:Add(5)
+    self.paras:Add({id})
+end
+
+--- 生成碰撞器
+---@param time number
+---@param id number 触发器Id(整数)
+---@param formulaId number 伤害计算公式Id(整数)
+---@param finalPercent number 最终伤害百分比(0-1小数)
+---@param maxApplyTimes number 最大作用单位数(0表示无限)(整数)
+---@param buffInfo string "buff1,buff1持续时间单位毫秒,buff1离开范围是否移除buff0或1;buff2,buff2持续时间单位毫秒,buff2离开范围是否移除buff0或1")(字符串，逗号和分号分割)
+---@param delay number 触发器延时生成(整数单位ms,默认1)
+function M:GenerateCollider(time,id,formulaId,finalPercent,maxApplyTimes,buffInfo,delay)
+    self.timelime:Add(time)
+    self.stepType:Add(6)
+    if maxApplyTimes == nil then
+        maxApplyTimes = 0
+    end
+    if buffInfo == nil then
+        buffInfo = ''
+    end
+    if delay == nil then
+        delay = 1
+    end
+    self.paras:Add({id,formulaId,finalPercent,maxApplyTimes,buffInfo,delay})
+end
+
+
+--- 添加特效（临时特效用这个，常驻还是走buff）
+---@param time number
+---@param id number 特效id
+function M:AddEffect(time,id)
+    self.timelime:Add(time)
+    self.stepType:Add(7)
+    self.paras:Add({id})
+end
+
+--- 给自己加BUFF
+---@param time number
+---@param id number buffid
+---@param lifeTime number 时间ms
+function M:AddBuff(time,id,lifeTime)
+    self.timelime:Add(time)
+    self.stepType:Add(9)
+    self.paras:Add({id,lifeTime})
+end
+
+--- 移除自己BUFF
+---@param time number
+---@param id number buffid
+function M:RemoveBuff(time,id)
+    self.timelime:Add(time)
+    self.stepType:Add(10)
+    self.paras:Add({id})
+end
+
+--- 改变Group
+---@param time number
+---@param group string 指定Group
+function M:ChangeToGroup(time,group)
+    self.timelime:Add(time)
+    self.stepType:Add(11)
+    self.paras:Add({group})
+end
+--- 根据条件改变Group
+---@param time number
+---@param condition string 条件
+---@param sucGroup string 满足条件Group
+---@param failGroup string 不满足条件Group
+function M:ChangeGroup(time,condition,sucGroup,failGroup)
+    self.timelime:Add(time)
+    self.stepType:Add(11)
+    if failGroup ~= nil then
+        self.paras:Add({condition,sucGroup,failGroup})
+    else
+        self.paras:Add({condition,sucGroup})
+    end
+    
+end
+
+return M

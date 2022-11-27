@@ -1,0 +1,3 @@
+-- 加载全局模块
+require "BaseClass"
+BaseSkill = require "BaseSkill"

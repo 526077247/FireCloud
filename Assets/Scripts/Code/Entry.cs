@@ -45,6 +45,12 @@ namespace TaoTie
 
         static void StartGame()
         {
+            ManagerProvider.RegisterManager<GameTimerManager>();
+            ManagerProvider.RegisterManager<NumericSystem>();
+            ManagerProvider.RegisterManager<XLuaManager>();
+            ManagerProvider.RegisterManager<SkillStepManager>();//2选1
+            ManagerProvider.RegisterManager<SkillStepLuaManager>();//2选1
+            ManagerProvider.RegisterManager<SkillSystem>();
             SceneManager.Instance.SwitchScene<LoginScene>().Coroutine();
         }
     }

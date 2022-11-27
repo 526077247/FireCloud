@@ -14,6 +14,7 @@ namespace TaoTie
 		public UILoopGridView LoopGridView;
 		public UILoopListView2 LoopListView2;
 		public UIBaseContainer Welcome;
+		public UIButton EnterBtn;
 
 		public int CurId;
 		
@@ -48,9 +49,12 @@ namespace TaoTie
 				});
 			}
 			Menu.SetData(paras,OnMenuIndexChanged);
+
+			EnterBtn = AddComponent<UIButton>("ScrollList/Welcome/Button");
 		}
 		public void OnEnable()
 		{
+			EnterBtn.SetOnClick(OnClickEnter);
 			Menu.SetActiveIndex(0,true);
 		}
 		#endregion
@@ -110,6 +114,11 @@ namespace TaoTie
 			}
 			dateItem.SetData(index);
 			return item;
+		}
+
+		public void OnClickEnter()
+		{
+			SceneManager.Instance.SwitchScene<MapScene>().Coroutine();
 		}
 		#endregion
 

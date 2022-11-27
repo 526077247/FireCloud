@@ -1,0 +1,13 @@
+local M = BaseClass("Skill1006",BaseSkill)
+
+function M:Start()
+    self:Wait(200)
+    self:AddBuff(10000,1002,10000)
+    self:RemoveBuff(0,1002)
+end
+
+function M:Interrupt()
+    self:AddEffect(0,1002)
+end
+
+return M

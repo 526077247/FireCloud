@@ -93,6 +93,7 @@ namespace TaoTie
 
 		private void Update()
 		{
+			ObjectPool.Instance.Update();
 			if (!IsInit) return;
 			TimeInfo.Instance.Update();
 			CodeLoader.Instance.Update?.Invoke();

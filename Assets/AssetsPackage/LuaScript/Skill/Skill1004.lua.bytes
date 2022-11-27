@@ -1,0 +1,9 @@
+local M = BaseClass("Skill1004",BaseSkill)
+
+function M:Start()
+    self:Wait(200)
+    self:GenerateCollider(0,1004,0,0,0,"1000,1000,0")
+    self:AddEffect(200,1002)
+end
+
+return M
