@@ -144,12 +144,16 @@ namespace TaoTie
                 return;
             if(!spellSkill.CanUse())return;
             this.CurSkillConfigId = spellSkill.ConfigId;
-            var nowpos = this.GetParent<Unit>().Position;
-            var nowpos2 = targetEntity.Position;
-            if (Vector2.Distance(new Vector2(nowpos.x, nowpos.z), new Vector2(nowpos2.x, nowpos2.z)) >
-                spellSkill.Config.PreviewRange[0])
+            if (spellSkill.Config.PreviewRange != null && spellSkill.Config.PreviewRange.Length >=1 &&
+                spellSkill.Config.PreviewRange[0] > 0)//不填或者填非正数表示无限距离
             {
-                return;
+                var nowpos = this.GetParent<Unit>().Position;
+                var nowpos2 = targetEntity.Position;
+                if (Vector2.Distance(new Vector2(nowpos.x, nowpos.z), new Vector2(nowpos2.x, nowpos2.z)) >
+                    spellSkill.Config.PreviewRange[0])
+                {
+                    return;
+                }
             }
             this.Para.Clear();
             this.Para.FromId = this.Id;
