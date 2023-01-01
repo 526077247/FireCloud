@@ -80,11 +80,9 @@ namespace TaoTie
 
 			Log.ILog = new UnityLogger();
 			
-
 			CodeLoader.Instance.CodeMode = this.CodeMode;
 			IsInit = true;
 			CodeLoader.Instance.Start();
-			AssemblyManager.Instance.AddAssembly(GetType().Assembly);
 		}
 
 		private void Start()
@@ -108,7 +106,6 @@ namespace TaoTie
 		public IEnumerator ReStart()
 		{
 			CodeLoader.Instance.isReStart = false;
-			AssemblyManager.Instance.RemoveHotfixAssembly();
 			yield return YooAssetsMgr.Instance.Init(YooAssets.PlayMode);
 			// 先设置更新补丁清单
 			yield return YooAssets.WeaklyUpdateManifestAsync(YooAssetsMgr.Instance.staticVersion);

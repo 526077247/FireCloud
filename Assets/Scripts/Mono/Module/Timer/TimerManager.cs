@@ -12,7 +12,7 @@ namespace TaoTie
         RepeatedTimer,
     }
     
-    public class TimerManager:IUpdateManager
+    public class TimerManager:IUpdateManager,IManager
     {
 
         public static TimerManager Instance { get; private set; }
@@ -229,7 +229,8 @@ namespace TaoTie
             {
                 return false;
             }
-            timerAction.Dispose();
+
+            this.RemoveChild(id);
             return true;
         }
 
@@ -259,6 +260,11 @@ namespace TaoTie
                 cancellationToken?.Add(CancelAction);
                 ret = await tcs;
             }
+            catch (Exception ex)
+            {
+                ret = false;
+                Log.Error(ex);
+            }
             finally
             {
                 cancellationToken?.Remove(CancelAction);    
@@ -285,7 +291,6 @@ namespace TaoTie
             TimerAction timer = this.AddChild(TimerClass.OnceWaitTimer, time, 0, tcs);
             this.AddTimer(tillTime, timer);
             long timerId = timer.Id;
-
             void CancelAction()
             {
                 if (this.Remove(timerId))
@@ -299,6 +304,11 @@ namespace TaoTie
             {
                 cancellationToken?.Add(CancelAction);
                 ret = await tcs;
+            }
+            catch (Exception ex)
+            {
+                ret = false;
+                Log.Error(ex);
             }
             finally
             {
