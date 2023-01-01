@@ -26,9 +26,9 @@ namespace TaoTie
 
         public void Destroy()
         {
-            for (int i = 0; i < Entitys.Count; i++)
+            for (int i = Entitys.Count-1; i>=0; i--)
             {
-                Entitys[i].Dispose();
+               Entitys[i].Dispose();
             }
             Entitys.Dispose();
             IdEntityMap.Dispose();
