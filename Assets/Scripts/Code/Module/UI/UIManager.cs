@@ -523,7 +523,7 @@ namespace TaoTie
                         GameObjectPoolManager.Instance.RecycleGameObject(obj);
                 }
                 if (view is II18N i18n)
-                    I18NManager.Instance.RemoveI18NEntity(i18n);
+                    I18NManager.Instance?.RemoveI18NEntity(i18n);
                 view.BeforeOnDestroy();
                 (view as IOnDestroy)?.OnDestroy();
             }
