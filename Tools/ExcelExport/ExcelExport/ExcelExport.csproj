@@ -52,7 +52,7 @@
 		<Compile Include="..\..\..\Assets\Scripts\Mono\Module\Assembly\BaseAttribute.cs">
 			<Link>Assembly\BaseAttribute.cs</Link>
 		</Compile>
-		<Compile Include="..\..\..\Assets\Scripts\Code\Core\Helper\ProtobufHelper.cs">
+		<Compile Include="..\..\..\Assets\Scripts\Code\Module\Config\ProtobufHelper.cs">
 			<Link>Helper\ProtobufHelper.cs</Link>
 		</Compile>
 	</ItemGroup>

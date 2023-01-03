@@ -18,7 +18,7 @@ namespace TaoTie
             {
                 foreach (DirectoryInfo d in Dir.GetDirectories()) //查找子目录
                 {
-                    res.AddRange(FindFile(dirPath + "\\" + d.Name));
+                    res.AddRange(FindFile(dirPath + "/" + d.Name));
                 }
                 foreach (var f in Directory.GetFiles(dirPath)) //查找文件
                 {
