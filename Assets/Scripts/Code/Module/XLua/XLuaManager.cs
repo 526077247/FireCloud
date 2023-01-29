@@ -4,7 +4,7 @@ using UnityEngine;
 using XLua;
 namespace TaoTie
 {
-    public class XLuaManager: IUpdateManager
+    public class XLuaManager:IManager, IUpdateManager
     {
         const string gameMainScriptName = "GameMain";
         public static XLuaManager Instance { get; private set; }
