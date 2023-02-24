@@ -72,7 +72,7 @@ namespace TaoTie
         
         public List<T> GetAll<T>() where T:Entity
         {
-            var type = typeof(T);
+            var type = TypeInfo<T>.Type;
             if(TypeEntitys.TryGetValue(type,out var res))
             {
                 return res as List<T>;
@@ -110,7 +110,7 @@ namespace TaoTie
         
         public T CreateEntity<T>() where T:Entity,IEntity
         {
-            Type type = typeof(T);
+            Type type = TypeInfo<T>.Type;
             T res = ObjectPool.Instance.Fetch(type) as T;
             res.BeforeInit(this);
             res.Init();
@@ -120,7 +120,7 @@ namespace TaoTie
 
         public T CreateEntity<T,P1>(P1 p1) where T:Entity,IEntity<P1>
         {
-            Type type = typeof(T);
+            Type type = TypeInfo<T>.Type;
             T res = ObjectPool.Instance.Fetch(type) as T;
             res.BeforeInit(this);
             res.Init(p1);
@@ -130,7 +130,7 @@ namespace TaoTie
         
         public T CreateEntity<T,P1,P2>(P1 p1,P2 p2) where T:Entity,IEntity<P1,P2>
         {
-            Type type = typeof(T);
+            Type type = TypeInfo<T>.Type;
             T res = ObjectPool.Instance.Fetch(type) as T;
             res.BeforeInit(this);
             res.Init(p1,p2);
@@ -140,7 +140,7 @@ namespace TaoTie
         
         public T CreateEntity<T,P1,P2,P3>(P1 p1,P2 p2,P3 p3) where T:Entity,IEntity<P1,P2,P3>
         {
-            Type type = typeof(T);
+            Type type = TypeInfo<T>.Type;
             T res = ObjectPool.Instance.Fetch(type) as T;
             res.BeforeInit(this);
             res.Init(p1,p2,p3);
@@ -149,7 +149,7 @@ namespace TaoTie
         }
         public T CreateEntity<T,P1,P2,P3,P4>(P1 p1,P2 p2,P3 p3,P4 p4) where T:Entity,IEntity<P1,P2,P3,P4>
         {
-            Type type = typeof(T);
+            Type type = TypeInfo<T>.Type;
             T res = ObjectPool.Instance.Fetch(type) as T;
             res.BeforeInit(this);
             res.Init(p1,p2,p3,p4);
@@ -159,7 +159,7 @@ namespace TaoTie
         
         public T CreateEntity<T,P1,P2,P3,P4,P5>(P1 p1,P2 p2,P3 p3,P4 p4,P5 p5) where T:Entity,IEntity<P1,P2,P3,P4,P5>
         {
-            Type type = typeof(T);
+            Type type = TypeInfo<T>.Type;
             T res = ObjectPool.Instance.Fetch(type) as T;
             res.BeforeInit(this);
             res.Init(p1,p2,p3,p4,p5);

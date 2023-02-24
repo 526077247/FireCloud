@@ -19,11 +19,11 @@ namespace TaoTie
             {
                 this.allSteps = new Dictionary<int, List<ISkillWatcher>>();
 
-                var types = AttributeManager.Instance.GetTypes(typeof(SkillWatcherAttribute));
+                var types = AttributeManager.Instance.GetTypes(TypeInfo<SkillWatcherAttribute>.Type);
                 for (int j = 0; j < types.Count; j++)
                 {
                     Type type = types[j];
-                    object[] attrs = type.GetCustomAttributes(typeof(SkillWatcherAttribute), false);
+                    object[] attrs = type.GetCustomAttributes(TypeInfo<SkillWatcherAttribute>.Type, false);
 
                     for (int i = 0; i < attrs.Length; i++)
                     {
@@ -41,11 +41,11 @@ namespace TaoTie
             {
                 this.allWatchers = new Dictionary<string, List<IConditionWatcher>>();
 
-                var types = AttributeManager.Instance.GetTypes(typeof(ConditionWatcherAttribute));
+                var types = AttributeManager.Instance.GetTypes(TypeInfo<ConditionWatcherAttribute>.Type);
                 for (int j = 0; j < types.Count; j++)
                 {
                     Type type = types[j];
-                    object[] attrs = type.GetCustomAttributes(typeof(ConditionWatcherAttribute), false);
+                    object[] attrs = type.GetCustomAttributes(TypeInfo<ConditionWatcherAttribute>.Type, false);
 
                     for (int i = 0; i < attrs.Length; i++)
                     {

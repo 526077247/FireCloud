@@ -12,7 +12,7 @@ namespace TaoTie
         
         public static DamageInfo Create()
         {
-            return ObjectPool.Instance.Fetch(typeof (DamageInfo)) as DamageInfo;
+            return ObjectPool.Instance.Fetch(TypeInfo<DamageInfo>.Type) as DamageInfo;
         }
 
         public void Dispose()

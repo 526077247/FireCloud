@@ -33,7 +33,7 @@ namespace TaoTie
         }
         public T Fetch<T>() where T: class
         {
-            return Fetch(typeof (T)) as T;
+            return Fetch(TypeInfo<T>.Type) as T;
         }
         public object Fetch(Type type)
         {

@@ -39,7 +39,7 @@ namespace TaoTie
 
         public static SkillPara Create(SpellComponent parent)
         {
-            var res = ObjectPool.Instance.Fetch(typeof (SkillPara)) as SkillPara;
+            var res = ObjectPool.Instance.Fetch(TypeInfo<SkillPara>.Type) as SkillPara;
             res.Parent = parent;
             return res;
         }
