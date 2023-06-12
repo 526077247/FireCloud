@@ -13,6 +13,7 @@ namespace TaoTie
 
         public ISkillStepManager StepManager => SkillStepLuaManager.Instance;
         #region override
+        public override EntityType Type => EntityType.SkillAbility;
 
         public void Init(int p1)
         {

@@ -32,6 +32,8 @@ namespace TaoTie
 
         #region override
 
+        public override EntityType Type => EntityType.Buff;
+
         public void Init(BuffHolderComponent holder, int id,long timestamp,long sourceId)
         {
             Holder = holder;

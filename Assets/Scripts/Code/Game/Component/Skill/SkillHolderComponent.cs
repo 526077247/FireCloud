@@ -26,7 +26,7 @@ namespace TaoTie
         {
             foreach ((_,var id) in IdSkillMap)
             {
-                Parent.Parent.Remove(id);
+                parent.Parent.Remove(id);
             }
             IdSkillMap.Dispose();
             IdSkillMap = null;
@@ -43,17 +43,17 @@ namespace TaoTie
         {
             if (!this.IdSkillMap.ContainsKey(configId))
             {
-                var skill = Parent.Parent.CreateEntity<SkillAbility, int>(configId);
+                var skill = parent.Parent.CreateEntity<SkillAbility, int>(configId);
                 this.IdSkillMap.Add(configId, skill.Id);
             }
-            return Parent.Parent.Get<SkillAbility>(this.IdSkillMap[configId]);
+            return parent.Parent.Get<SkillAbility>(this.IdSkillMap[configId]);
         }
         
         public bool TryGetSkillAbility(int configId,out SkillAbility skill)
         {
             if (this.IdSkillMap.ContainsKey(configId))
             {
-                skill = Parent.Parent.Get<SkillAbility>(this.IdSkillMap[configId]);
+                skill = parent.Parent.Get<SkillAbility>(this.IdSkillMap[configId]);
                 return true;
             }
             skill = null;

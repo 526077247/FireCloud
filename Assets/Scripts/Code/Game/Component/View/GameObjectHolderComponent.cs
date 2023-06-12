@@ -80,7 +80,7 @@ namespace TaoTie
             }
             EntityView = obj.transform;
             Collector = obj.GetComponent<ReferenceCollector>();
-            EntityView.SetParent(this.Parent.Parent.GameObjectRoot);
+            EntityView.SetParent(this.parent.Parent.GameObjectRoot);
             var ec = obj.GetComponent<EntityComponent>();
             if (ec == null) ec = obj.AddComponent<EntityComponent>();
             ec.Id = this.Id;

@@ -11,5 +11,7 @@
         public const int MoveTimer = 1006;
         public const int RunAfterTimer = 1007;
         public const int DestroyEffect = 1008;
+        public const int DelayDestroyEntity = 1009;
+        public const int ComponentUpdate = 1010;
     }
 }

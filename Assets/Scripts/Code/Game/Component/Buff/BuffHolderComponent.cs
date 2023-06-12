@@ -24,7 +24,7 @@ namespace TaoTie
             Messager.Instance.RemoveListener<Unit,Vector3>(Id,MessageId.ChangePositionEvt,AfterMove);
             for (int i = 0; i < AllBuff.Count; i++)
             {
-                Parent.Parent.Remove(AllBuff[i]);
+                parent.Parent.Remove(AllBuff[i]);
             }
             AllBuff.Dispose();
             Groups.Dispose();
@@ -46,7 +46,7 @@ namespace TaoTie
         public Buff AddBuff(int id,long timestamp,long sourceId)
         {
             bool canAdd = true;
-            var source = this.Parent.Parent.Get<Unit>(sourceId);
+            var source = this.parent.Parent.Get<Unit>(sourceId);
             for (int i = 0; i < this.AllBuff.Count; i++)
             {
                 var basebuff = this.Get(this.AllBuff[i]);
@@ -82,7 +82,7 @@ namespace TaoTie
                     }
                 }
 
-                Buff buff = this.Parent.Parent.CreateEntity<Buff,BuffHolderComponent, int, long, long>(this,id, timestamp, sourceId);
+                Buff buff = this.parent.Parent.CreateEntity<Buff,BuffHolderComponent, int, long, long>(this,id, timestamp, sourceId);
                 this.Groups[conf.Group] = buff.Id;
                 this.AllBuff.Add(buff.Id);
                 for (int i = 0; i < this.AllBuff.Count; i++)
@@ -90,7 +90,7 @@ namespace TaoTie
                     var basebuff = this.Get(this.AllBuff[i]);
                     basebuff.AfterAddBuff(source, this.GetParent<Unit>(), buff);
                 }
-                Parent.GetComponent<GameObjectHolderComponent>().AddEffect(buff.Config.EffectId).Coroutine();
+                parent.GetComponent<GameObjectHolderComponent>().AddEffect(buff.Config.EffectId).Coroutine();
                 return buff;
             }
 
@@ -104,7 +104,7 @@ namespace TaoTie
         /// <returns></returns>
         public Buff Get(long id)
         {
-            Buff buff = this.Parent.Parent.Get<Buff>(id);
+            Buff buff = this.parent.Parent.Get<Buff>(id);
             return buff;
         }
         /// <summary>
@@ -164,7 +164,7 @@ namespace TaoTie
                     var basebuff = this.Get(this.AllBuff[i]);
                     basebuff.AfterRemoveBuff(this.GetParent<Unit>(), buff);
                 }
-                Parent.GetComponent<GameObjectHolderComponent>().RemoveEffect(buff.Config.EffectId);
+                parent.GetComponent<GameObjectHolderComponent>().RemoveEffect(buff.Config.EffectId);
                 buff.Dispose();
                 return true;
             }
@@ -239,7 +239,7 @@ namespace TaoTie
         {
             foreach ((_,var id) in this.Groups)
             {
-                Parent.GetComponent<GameObjectHolderComponent>().RemoveEffect(this.Get(id).Config.EffectId);
+                parent.GetComponent<GameObjectHolderComponent>().RemoveEffect(this.Get(id).Config.EffectId);
             }
         }
         
@@ -250,7 +250,7 @@ namespace TaoTie
         {
             foreach ((_,var id) in this.Groups)
             {
-                Parent.GetComponent<GameObjectHolderComponent>().RemoveEffect(this.Get(id).Config.EffectId);
+                parent.GetComponent<GameObjectHolderComponent>().RemoveEffect(this.Get(id).Config.EffectId);
             }
         }
 

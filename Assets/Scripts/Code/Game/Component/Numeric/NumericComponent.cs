@@ -106,7 +106,7 @@ namespace TaoTie
 			if (isPublicEvent)
 			{
 				NumericChange args = new NumericChange();
-				args.Parent = this.Parent;
+				args.Parent = this.parent;
 				args.NumericType = numericType;
 				args.Old = oldValue;
 				args.New = value;
